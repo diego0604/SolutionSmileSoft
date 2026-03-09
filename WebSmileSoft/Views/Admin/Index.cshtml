@@ -1,0 +1,926 @@
+﻿
+
+<section>
+    @* <div class="d-sm-flex justify-content-between align-items-center mb-4">
+    <h3 class="mb-0 text-primary">Dashboard</h3>@*<a class="btn btn-primary btn-sm d-none d-sm-inline-block" role="button" href="#"><i class="fas fa-download fa-sm text-white-50"></i>&nbsp;Generate Report</a>
+    </div> *@
+    <div class="row justify-content-center">
+        <div class="row">
+            <div class="col-md-6 col-xl-3 mb-4">
+                <a class="nav-link" asp-controller="Admin" asp-action="ViewTableUsers" class="text-decoration-none" id="PanelUsuarios">
+
+                    <div class="card shadow border-start-primary py-2 card-admin">
+                        <div class="card-body">
+                            <div class="row align-items-center no-gutters">
+                                <div class="col me-2">
+                                    <div class="text-uppercase text-primary fw-bold text-xs mb-1"><span>Pacientes Registrados</span></div>
+                                    <div class=" fw-bold h5 mb-0"><span class="align-items-center" id="userCount"></span></div><!-- Cargar datos de la base de datos -->
+                                </div>
+                                <div class="col-auto"><i class="fa-solid fa-user fa-2x text-gray-300"></i></div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-6 col-xl-3 mb-4">
+                <a class="nav-link" asp-controller="Admin" asp-action="ViewTableUsers" class="text-decoration-none" id="doctoresRegistrados">
+
+                    <div class="card shadow border-start-success py-2 card-admin">
+                        <div class="card-body">
+                            <div class="row align-items-center no-gutters">
+                                <div class="col me-2">
+                                    <div class="text-uppercase text-success fw-bold text-xs mb-1"><span>Doctores Registrados</span></div>
+                                    <div class="fw-bold h5 mb-0"><span id="userDoctor"></span></div><!-- Cargar datos de la base de datos -->
+                                </div>
+                                <div class="col-auto"><i class="fa-solid fa-user-doctor fa-2x text-gray-300"></i></div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-6 col-xl-3 mb-4">
+                <a class="nav-link" asp-controller="Admin" asp-action="ViewTableUsers" class="text-decoration-none" id="adminRegistrados">
+
+                    <div class="card shadow border-start-success py-2 card-admin">
+                        <div class="card-body">
+                            <div class="row align-items-center no-gutters">
+                                <div class="col me-2">
+                                    <div class="text-uppercase text-info fw-bold text-xs mb-1"><span>Admin... Registrados</span></div>
+                                    <div class="fw-bold h5 mb-0"><span id="userAdmin"></span></div><!-- Cargar datos de la base de datos -->
+                                </div>
+                                <div class="col-auto"><i class="fa-solid fa-user fa-2x text-gray-300"></i></div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-6 col-xl-3 mb-4">
+                <a class="nav-link" asp-controller="Doctor" asp-action="GestiondeCitas" class="text-decoration-none" id="citasregistradas">
+
+                    @*  <div class="cardClock">
+                    <p class="time-text" id="time"><span>11:11</span></p>
+                    <p class="day-text" id="date">Wednesday, June 15th</p>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 16 16" stroke-width="0" fill="currentColor" stroke="currentColor" class="moon"><path d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"></path><path d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.734 1.734 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.734 1.734 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.734 1.734 0 0 0 1.097-1.097l.387-1.162zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L13.863.1z"></path></svg>
+                    </div> *@
+                    <div class="card shadow border-start-success py-2 card-admin">
+                        <div class="card-body">
+                            <div class="row align-items-center no-gutters">
+                                <div class="col me-2">
+                                    <div class="text-uppercase text-warning fw-bold text-xs mb-1"><span>Citas Registradas</span></div>
+                                    <div class="fw-bold h5 mb-0"><span id="dateRequest"></span></div><!-- Cargar datos de la base de datos -->
+                                </div>
+                                <div class="col-auto"><i class="fa-solid fa-user fa-2x text-gray-300"></i></div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="d-flex row col-md-12 justify-content-center align-content-center text-primary">
+            <!-- Vista de Citas -->
+            <div class="col-md-5" style="display: none;">
+                <section id="citas">
+                    <h2>Citas Programadas</h2>
+                    <!-- Calendario de citas -->
+                    <div id="calendario"></div>
+                </section>
+            </div>
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header text-bg-primary">
+                        Lista Citas
+                    </div>
+                    <div class="card-body shadow-lg">
+                        <div class="table-responsive">
+                            <table class="table table-hover display" width="100%" id="citasDoctores">
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</section>
+
+<!-- Modal Editar Cita -->
+<div class="modal fade" id="reprogramarCita" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editModalLabel">Cita</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="card-header py-3">
+                        <p class="text-primary m-0 fw-bold">Cambiar Estado</p>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+
+                            <div class="form-group">
+                                <label for="estadoCita">Seleccionar Nuevo Estado</label>
+                                <input type="text" class="form-control" id="estadoCita" name="Editar Estado Cita">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" id="saveChangesBtn">Guardar Cambios</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script>
+
+        const driver = window.driver.js.driver;
+
+        const driverObj = driver({
+            showProgress: true,
+            showButtons: [
+                'next',
+                'previous',
+                'close'
+            ],
+            steps: [
+                {
+                    element: '.wrapper',
+                    popover: {
+                        title: 'Bienvenido a Smilesoft',
+                        description: 'Este es el área principal de Smilesoft. Te guiaremos a través de las diversas funcionalidades de nuestro sitio para asegurarnos de que aproveches al máximo tu experiencia.'
+                    }
+                },
+                {
+                    element: '#nav_bar',
+                    popover: {
+                        title: 'Barra Superior',
+                        description: 'La Barra Superior es tu punto central de navegación. Desde aquí, puedes buscar información en nuestra aplicación o acceder a tu perfil para personalizar tu experiencia.'
+                    }
+                },
+                {
+                    element: '#MenuPerfil',
+                    popover: {
+                        title: 'Perfil',
+                        description: 'Accede a los ajustes de tu perfil desde este menú. Al hacer clic, se mostrarán las opciones de perfil, permitiéndote personalizar tu cuenta según tus preferencias.'
+                    },
+                    onNextClick: () => {
+                        //añadir la clase show al elemento id=ShowProfileMenu y cambiar el aria-expanded a true
+                        document.getElementById('ShowProfileMenu').classList.add('show');
+                        document.getElementById('ShowProfileMenu').setAttribute('aria-expanded', 'true');
+                        driverObj.moveNext();
+                    },
+                },
+                //{ element: '#ShowProfileMenu', popover: { title: 'Perfil', description: 'Desde aqui podremos acceder a los ajustes de nuestro perfil' } },
+                {
+                    element: '.sidebar',
+                    popover: {
+                        title: 'Menú de Opciones',
+                        description: 'El Menú de Opciones muestra los diferentes aplicativos de nuestro software. Explora las diversas funciones que ofrecemos para mejorar tu experiencia con Smilesoft.'
+                    }
+                },
+                //{ element: '#divAdmin', popover: { title: 'Opciones Administrador', description: 'Estas son las rutas que podra usar el administrador del aplicativo' } },
+                {
+                    element: '#Dashboard',
+                    popover: {
+                        title: 'Página de Inicio del Admin',
+                        description: 'La Página de Inicio del Admin proporciona una visión general de la información clave al ingresar. Aquí encontrarás datos importantes y enlaces rápidos para facilitar la navegación.'
+                    }
+                },
+                {
+                    element: '#AdminUsers',
+                    popover: {
+                        title: 'Administrar Usuarios',
+                        description: 'Este panel permite al administrador agregar, editar, desactivar o activar usuarios, así como cambiar contraseñas. Gestiona fácilmente los perfiles de los usuarios según sea necesario.'
+                    }
+                },
+                {
+                    element: '#AdminSite',
+                    popover: {
+                        title: 'Administrar Sitio',
+                        description: 'Desde esta sección, puedes configurar la apariencia del sitio, el número de WhatsApp del consultorio y las preguntas relacionadas con los tratamientos. Personaliza la plataforma según tus necesidades.'
+                    }
+                },
+                {
+                    element: '#ClinicHistory',
+                    popover: {
+                        title: 'Historias Clínicas',
+                        description: 'Explora las historias clínicas de los usuarios desde esta opción. Accede a información médica relevante para garantizar un seguimiento preciso de la salud de los pacientes.'
+                    }
+                },
+                {
+                    element: '.logoutUsers',
+                    popover: {
+                        title: 'Cerrar Sesión',
+                        description: 'Cierra tu sesión fácilmente desde este enlace cuando hayas terminado de utilizar Smilesoft. Garantizamos la seguridad de tu cuenta con este sencillo paso.'
+                    }
+                },
+
+                {
+                    element: '#PanelUsuarios',
+                    popover: {
+                        title: 'Pacientes Registrados',
+                        description: 'Este panel muestra la lista de todos los pacientes que han sido registrados en nuestro Aplicativo. Puedes acceder a información detallada de cada paciente aquí.'
+                    }
+                },
+                {
+                    element: '#doctoresRegistrados',
+                    popover: {
+                        title: 'Doctores Registrados',
+                        description: 'Aquí encontrarás la lista completa de doctores que están registrados en nuestro Aplicativo. Obtén información relevante sobre cada doctor y gestiona sus perfiles desde este panel.'
+                    }
+                },
+                {
+                    element: '#adminRegistrados',
+                    popover: {
+                        title: 'Administradores Registrados',
+                        description: 'Visualiza la lista de administradores registrados en nuestro Aplicativo. Este panel te proporciona acceso rápido a la información de los administradores y sus roles asignados.'
+                    }
+                },
+                {
+                    element: '#citasregistradas',
+                    popover: {
+                        title: 'Citas Registradas',
+                        description: 'Accede a un resumen de todas las citas registradas en nuestro Aplicativo. Este panel te permite gestionar y dar seguimiento a las citas programadas de manera eficiente.'
+                    }
+                },
+
+                {
+                    element: '.wrapper', popover: { title: 'Gracias por Usar Smilesoft', description: '' }, onDeselected: () => {
+                        localStorage.setItem('tutorial', true);
+                    }
+                },
+
+            ],
+
+
+        });
+        //debugger;
+        //driverObj.drive();
+        console.log("Tutorial", localStorage.getItem('tutorial'));
+        // Cuando el usuario inicia sesión por primera vez
+        let tutorialState = localStorage.getItem('tutorial');
+        if (tutorialState === "false") {
+            // Mostrar el tutorial
+            localStorage.setItem('tutorial', true);
+            driverObj.drive();
+
+            // Establecer la variable para indicar que el usuario ha visto el tutorial
+
+        }
+
+    </script>
+
+    <script>
+        let userRole = sessionStorage.getItem('userRole');
+        if (userRole !== '1') {
+            logoutUser();
+        }
+        let selectAppointment = null;
+        let eventos = [];
+        $(document).ready(function () {
+            //verifyToken();
+            // Realizar solicitud AJAX para obtener la lista de usuarios y contarlos
+            var utID = 3;
+            $.ajax({
+                url: '@ViewBag.urlEndPoint' + '/api/Users/v1/ViewUsers',
+                type: 'GET',
+                data: { 'utID': utID },
+                contentType: "application/json",
+                dataType: 'json',
+                success: function (data) {
+                    ////console.log(data);
+
+                    if (data.itemJson === null) {
+                        $("#userCount").text("0");
+                    } else {
+
+                        // Mostrar el número de usuarios en el elemento HTML con id "userCount"
+                        var userCount = data.itemJson.length;
+                        $("#userCount").text(userCount);
+
+                    }
+
+                },
+                error: function (error) {
+                    //console.log('Error al obtener la lista de usuarios.');
+
+                }
+            });
+            var utID = 2;
+            $.ajax({
+                url: '@ViewBag.urlEndPoint' + '/api/Users/v1/ViewUsers',
+                type: 'GET',
+                data: { 'utID': utID },
+                contentType: "application/json",
+                dataType: 'json',
+                success: function (data) {
+                    ////console.log(data);
+
+                    if (data.itemJson === null) {
+                        $("#userDoctor").text("0");
+                    } else {
+                        // Mostrar el número de usuarios en el elemento HTML con id "userCount"
+                        var userCount = data.itemJson.length;
+                        $("#userDoctor").text(userCount);
+
+                    }
+                },
+                error: function (error) {
+                    //console.log('Error al obtener la lista de usuarios.');
+                }
+            });
+            var utID = 1;
+            $.ajax({
+                url: '@ViewBag.urlEndPoint' + '/api/Users/v1/ViewUsers',
+                type: 'GET',
+                data: { 'utID': utID },
+                contentType: "application/json",
+                dataType: 'json',
+                success: function (data) {
+                    ////console.log(data);
+
+                    if (data.itemJson === null) {
+                        $("#userAdmin").text("0");
+                    } else {
+
+                        // Mostrar el número de usuarios en el elemento HTML con id "userCount"
+                        var userCount = data.itemJson.length;
+                        $("#userAdmin").text(userCount);
+
+                    }
+
+                },
+                error: function (error) {
+                    //console.log('Error al obtener la lista de usuarios.');
+                }
+            });
+
+            // Resto de tu código...
+        });
+        // Espera a que se cargue el documento
+        $(document).ready(function () {
+            // Adjunta un controlador de eventos de clic al botón
+            $("#buscarUsuarioBtn").click(function () {
+                var uID = 3;
+
+                ////console.log("Buscando al Usuario " + uID);
+
+                $.ajax({
+                    url: '@ViewBag.urlEndPoint' + '/api/Users/v1/GetUserDetails',
+                    type: 'GET',
+                    data: { 'uID': uID },
+                    contentType: "application/json",
+                    dataType: 'json',
+                    success: function (data) {
+                        ////console.log(data);
+
+                        if (data.itemJson === null) {
+                            //console.log("No se cargó correctamente");
+
+                        } else {
+                            // Mostrar los datos en la consola o realizar otras acciones
+                            //console.log("Datos Cargados Correctamente");
+                            //console.log(data.itemJson);
+
+                        }
+                    },
+                    error: function (error) {
+                        //console.log('Error al obtener los detalles del usuario.');
+                    }
+                });
+            });
+        });
+        $(document).ready(function () {
+            let uID = sessionStorage.getItem("userID");
+            getUserCitas(uID);
+            $("#loadingScreen").show();
+
+
+        });
+
+        function getUserCitas(uID) {
+            // Realizar solicitud AJAX para obtener la lista de usuarios
+            // var utID = 1;
+            mostrarCargando();
+            let dateStatus = null;
+            $.ajax({
+                url: sessionStorage.urlEP + '/api/Appointments/v1/GetAppointmentsList',
+                type: 'GET',
+                contentType: "application/json",
+                dataType: 'json',
+                success: function (data) {
+                    $("#loadingScreen").hide();
+                    // Procesar los datos recibidos y agregar filas a la tabla
+                    let dataSet = [];
+                    let users = data.itemJson;
+                    //console.table(users);
+                    let citasRegistradas = 0;
+                    $("#dateRequest").text(citasRegistradas);
+                    if (data.itemJson !== null) {
+                        citasRegistradas = data.itemJson.length;
+                        $.each(data.itemJson, function (index, cita) {
+                            let fechaCita = cita.aDate;
+                            let fechaFormateada = fechaCita.substring(0, 10);
+                            let rowData = [
+                                index + 1,
+                                cita.aID,
+                                cita.uName,
+                                cita.uCellphone,
+                                cita.uDoctorName,
+                                cita.aDescription,
+                                fechaFormateada,
+                                cita.aTime,
+                                cita.asName
+                            ];
+                            dataSet.push(rowData);
+                        });
+                        $("#dateRequest").text(citasRegistradas);
+                    }
+                    // Inicializa o actualiza el DataTable con los datos procesados
+                    tableCitas = $('#citasDoctores').DataTable({
+                        columns: [
+                            { title: '#' },
+                            { title: 'IdCita', visible: false },
+                            { title: 'Nombre' },
+                            { title: 'Celular' },
+                            { title: 'Doctor' },
+                            { title: 'Motivo' },
+                            { title: 'Fecha' },
+                            { title: 'Hora' },
+                            { title: 'Estado' },
+                            {
+                                title: 'Acciones',
+                                orderable: false, // Para desactivar la ordenación en esta columna
+                                data: null, // Usaremos la columna "Acciones" solo para botones
+                                defaultContent: '<button class="btn btn-warning btn-sm btnEditarC" data-toggle="modal" data-target="#editarCitaModal" data-toggle="tooltip" title="Cambiar Estado Cita"> <i class="fa-regular fa-pen-to-square"></i></button> ' +
+                                    '<button class="btn btn-primary btn-sm btnDesactivarC" data-toggle="tooltip" title="Cancelar Cita" type="button"> <i class="fas fa-ban"> </i></button> '
+                            }
+                        ],
+
+                        data: dataSet,
+                        dom: 'Bfrtip',
+                        buttons: {
+                            buttons: [
+                                {
+                                    extend: 'print', className: 'btn btn-sm',
+                                    messageTop: 'Citas SmileSoft',
+                                }
+                            ]
+                        },
+                        "paging": false,
+                        select: true,
+                        destroy: true,
+                        language: {
+                            url: '//cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json',
+                        },
+                        createdRow: function (row, data, dataIndex) {
+                            // Obtén el valor del estado en la columna "Estado"
+                            var estado = data[8]; // Asegúrate de que 8 sea el índice correcto para la columna "Estado"
+
+                            // Si el estado es "cancelado", oculta los botones en esta fila
+                            if (estado === 'Cancelado') {
+                                $(row).find('.btnDesactivarC, .btnEditarC').hide();
+                            }
+                            // Si el estado es "realizado", oculta los botones en esta fila
+                            if (estado === 'Realizado') {
+                                $(row).find('.btnDesactivarC, .btnEditarC').hide();
+                            }
+                            if (estado === 'Confirmado') {
+                                $(row).find('.btnDesactivarC').hide();
+                            }
+                        },
+
+                    });
+                    if (dateStatus == "Cancelado") {
+                        $('btnDesactivarC').hide();
+                    }
+                    Swal.close();
+                    tableCitas.column(9).nodes().to$().find('.btnDesactivarC').click(function () {
+                        // Maneja la acción del botón aqui
+                        let data = tableCitas.row($(this).parents('tr')).data();
+                        let CitaID = data[1]; // la primera columna contiene el ID del usuario
+                        let CitaEstado = data[8];
+                        if (CitaEstado == "Realizado") {
+                            Swal.fire({
+                                icon: 'info',
+                                title: 'Oops...',
+                                text: 'La cita ya fue realizada, no se puede cancelar.',
+                                confirmButtonColor: '#008dc9'
+                            })
+                        } else if (CitaEstado == "Cancelado") {
+                            $('btnDesactivarC').prop('disabled', true);
+                            Swal.fire({
+                                icon: 'info',
+                                title: 'Oops...',
+                                text: 'La cita ya fue cancelada.',
+                                confirmButtonColor: '#008dc9'
+                            })
+                        } else if (CitaEstado == "Confirmado") {
+                            Swal.fire({
+                                icon: 'info',
+                                title: 'Oops...',
+                                text: 'La cita ya fue confirmada, no se puede cancelar.',
+                                confirmButtonColor: '#008dc9'
+                            })
+                        } else {
+                            Swal.fire({
+                                title: 'Cancelar Cita',
+                                text: '¿Está seguro que desea cancelar la cita?',
+                                icon: 'warning',
+                                showCancelButton: true,
+                                confirmButtonText: 'Si, Cancelar Cita',
+                                cancelButtonText: 'Atrás'
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    $.ajax({
+                                        url: sessionStorage.urlEP + `/api/Appointments/v1/UpdateAppointmentStatus?uIDPetition=${uIDPetition}`,
+                                        type: 'GET',
+                                        data: { 'aID': CitaID, 'asID': 4 },
+                                        contentType: "application/json",
+                                        dataType: 'json',
+                                        success: function (response) {
+                                            if (response.codeStatus == 0) {
+                                                Swal.fire({
+                                                    title: 'Cita Cancelada',
+                                                    text: 'La cita ha sido Cancelada exitosamente.',
+                                                    icon: 'success',
+                                                    confirmButtonText: 'Aceptar'
+                                                }).then((result) => {
+                                                    if (result.isConfirmed) {
+                                                        location.reload();
+                                                    }
+                                                })
+                                            }
+                                            else if (response.codeStatus == -1) {
+                                                Swal.fire({
+                                                    title: 'Error',
+                                                    text: response.messageStatus,
+                                                    icon: 'error',
+                                                    confirmButtonText: 'Aceptar'
+                                                })
+                                            }
+
+                                        },
+                                        error: function (error) {
+                                            //console.log('Error al obtener los detalles del usuario.');
+                                        }
+
+                                    }).then((result) => {
+                                        if (result.isConfirmed) {
+                                            location.reload();
+                                        }
+                                    })
+                                }
+                            })
+                        }
+
+                    });
+                    tableCitas.column(9).nodes().to$().find('.btnEditarC').click(async function () {
+                        // Maneja la acción del botón aqui
+                        let data = tableCitas.row($(this).parents('tr')).data();
+                        let CitaID = data[1]; // la primera columna contiene el ID del usuario
+                        selectAppointment = CitaID;
+                        const { value: citaState } = await Swal.fire({
+                            title: 'Seleccionar estado de la cita',
+                            input: 'select',
+                            inputOptions: {
+                                '1': 'Pendiente',
+                                '2': 'Confirmada',
+                                '3': 'Completada'
+                            },
+                            inputPlaceholder: 'Selecciona el estado de la cita',
+                            showCancelButton: true,
+                            html: "<div id='form-history-content'></div>",
+                            allowOutsideClick: false,
+                            width: '50%',
+                            confirmButtonColor: '#008dc9',
+                            didOpen: function (ele) {
+                                $(ele).find('.swal2-select').insertBefore($(ele).find('.swal2-content div'));
+                                Swal.getInput().addEventListener('change', (event) => {
+                                    if (event.target.value == 3) {
+                                        $("#form-history-content").append('<button type="button" class="btn btn-primary" id="createFormHistory">Agregar historia clínica</button>');
+                                        $("#createFormHistory").click(() => createFormHistory(CitaID));
+                                    } else {
+                                        $("#form-history-content").empty();
+                                        //console.log('Guardar cambios', event.target.value);
+                                        changeDateStatus(event.target.value, CitaID);
+                                    }
+                                })
+                            },
+                            inputValidator: (value) => {
+                                return new Promise((resolve) => {
+                                    if (value > 0) {
+                                        console.log(value)
+
+                                        // alert(value);
+                                        //resolve(value); // Si se selecciona un estado, resolvemos con ese valor
+                                        //changeDateStatus(value, CitaID);
+                                    } else {
+                                        resolve('Debes seleccionar un estado de cita.');
+                                    }
+                                });
+                            }
+                        });
+
+                    });
+                },
+                error: function (error) {
+                    //console.log('Error al obtener la lista de usuarios.');
+                }
+            });
+        }
+
+        function createFormHistory(citaID) {
+            //console.log(citaID);
+            Swal.close();
+            // TODO hacer petición para obtener la estructura del formulario
+
+            let structure = [];
+
+            $.ajax({
+                url: sessionStorage.urlEP + '/api/Generics/v1/GetUsersClinicStoryFormat?oID=1',
+                type: 'GET',
+                contentType: "application/json",
+                dataType: 'json',
+                async: false,
+                success: function ({ itemJson, codeStatus }) {
+                    if (codeStatus == 0) {
+                        //structure = JSON.parse(itemJson);
+                        let structureObject = JSON.parse(itemJson);
+                        structure = structureObject;
+                    }
+                    else if (response.codeStatus == -1) {
+                        Swal.fire({
+                            title: 'Error',
+                            text: response.messageStatus,
+                            icon: 'error',
+                            confirmButtonText: 'Aceptar',
+                            confirmButtonColor: '#008dc9'
+                        })
+                    }
+                }
+            })
+
+
+            let questionTypes = {
+                'open': function (question) {
+                    let inputField = $(`<input type="text" id="${question.id}" class="form-control"></input><br>`);
+
+                    let container = $('<div class="form-group"></div>').append(
+                        `<label class="text-primary m-0 fw-bold" for="${question.id}">` + question.name + '</label><br>', inputField);
+
+                    return container
+                },
+                'close': function (question) {
+
+                    let checkBox1 = $(`<input class="form-check-input" id="${question.id}" type="checkbox" >`).attr('name', "checkbox-close-question");
+
+                    let label1 = $(`<label class="form-check-label" for="${question.id}">`).text("SI");
+
+                    let checkBox2 = $(`<input class="form-check-input" id="${question.id}0" type="checkbox">`).attr('name', "checkbox-close-question");
+
+                    let label2 = $(`<label class="form-check-label" for="${question.id}0">`).text("NO");
+
+                    let container1 = $('<div class="form-check form-check-inline"></div>').append(checkBox1, label1);
+
+                    let container2 = $('<div class="form-check form-check-inline"></div>').append(checkBox2, label2);
+
+                    let container = $('<div class="card-header"></div>').append(`<p class="text-primary m-0 fw-bold">${question.name}</p>`, container1, container2);
+
+                    return container;
+                },
+                'multiple': function (question) {
+                    let options = $(`<select class="form-select" id="${question.id}" multiple></select>`);
+
+                    question.options.forEach(function (option) {
+                        options.append('<option value="' + option + '">' + option + '</option>');
+                    });
+
+                    let container = $('<div class="card-header py-3"></div>').append(`<p class="text-primary m-0 fw-bold">${question.name}</p>`, options)
+
+                    return container
+                },
+                'fileUpload': function (question) {
+                    let inputField = $(`<div class="col-10"><input placeholder="Imagen" type="file" id="uploadIMG" accept=".jpg , .png" class="form-control uploadIMG"></input><br></div>`);
+
+                    let container = $('<div class="row"><div class="form-group">').append(
+                        `<label class="text-primary m-0 fw-bold" for="${question.id}">`
+                        + `Imagen # ${question.id}: ` + question.name +
+                        '</label><br>', inputField, `<div class="col-2"><button class="btn btn-primary btnFileUpload" type="button" id="btnFileUpload"> Subir </button></div></div>`);
+
+                    return container
+                }
+            };
+
+            let form = $('<form class="form-group" id="create-form-history"></form>');
+
+            $(document).on('click', '.btnFileUpload', function () {
+
+                let citaID = selectAppointment;
+                let file = $(this).parent().parent().find('.uploadIMG').prop('files')[0];
+                let formData = new FormData();
+                formData.append('file', file);
+                $.ajax({
+                    url: `${sessionStorage.urlEP}/api/Blobs/upload?citaID=${citaID}&genericName=cita_${citaID}`,
+                    type: "POST",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function (response) {
+                        $('#uploadIMG').attr('type', 'text');
+                        $('#uploadIMG').prop('disabled', true);
+                        $('.btnFileUpload').hide();
+                        $('#uploadIMG').val(response);
+                        //console.log("valor del input: ", $('#uploadIMG').val());
+                    },
+                    error: function () {
+                        Swal.fire({
+                            title: 'Error',
+                            text: 'Por favor revise el formato de su archivo, e intente nuevamente.',
+                            icon: 'error',
+                            confirmButtonText: 'Aceptar',
+                            confirmButtonColor: '#008dc9'
+                        })
+                    }
+                });
+            });
+
+            let finalStructure = [];
+            structure.forEach(function (question, index) {
+                let questionContainer = $('<div class="question"></div>');
+
+                if (question.type in questionTypes) {
+                    let inputElement = questionTypes[question.type](question);
+                    question.id = index + 1;
+                    finalStructure.push(question);
+                    questionContainer.append(inputElement);
+                    form.append(questionContainer);
+                } else {
+                    console.error('Tipo de pregunta no válido: ' + question.type);
+                }
+            });
+            // form.css({
+            //     'display': 'grid',
+            //     'grid-template-columns': '1fr 1fr',
+            //     'grid-gap': '10px'
+            // });
+            Swal.fire({
+                title: 'Agregar historia clínica',
+                confirmButtonText: 'Confirmar',
+                html: form,
+                focusConfirm: false,
+                allowOutsideClick: false,
+                width: '50%',
+                confirmButtonColor: '#008dc9',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    finalStructure = finalStructure.map((question) => {
+                        let value = $(`#${question.id}`).val()
+                        if (question.type == 'close') {
+                            value = $(`#${question.id}:checked`).val() == 'on' ? 'SI' : 'NO';
+                        }
+                        if (question.type == 'fileUpload') {
+                            value = $('#uploadIMG').val();
+                        }
+                        return {
+                            ...question, value
+                        }
+                        
+                    });
+                    saveHistoryForm(finalStructure, citaID);
+                }
+            })
+        }
+
+        function saveHistoryForm(form, citaID) {
+            form = '{"data": ' + JSON.stringify(form) + '}'; //NO EDITAR ESTA ESTRUCTURA A MENOS QUE SE VAYA A AJUSTAR EL SERVICIO
+            $.ajax({
+                url: sessionStorage.urlEP + `/api/Generics/v1/SetUsersClinicStoryFormat?uIDPetition=${uIDPetition}&aID=${citaID}`,
+                type: 'POST',
+                data: JSON.stringify(form),
+                contentType: "application/json",
+                dataType: 'json',
+                success: function (response) {
+                    //debugger;
+                    //console.log(response)
+                    if (response.codeStatus == 0) {
+                        Swal.fire({
+                            title: 'Historia Clinica Creada',
+                            icon: 'info',
+                            confirmButtonText: 'Aceptar',
+                            confirmButtonColor: '#008dc9'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                changeDateStatus(3, citaID);
+                                // swal.close();
+                                // location.reload();
+                            }
+                        })
+                    }
+                    else if (response.codeStatus == -1) {
+                        Swal.fire({
+                            title: 'Error',
+                            text: response.messageStatus,
+                            icon: 'error',
+                            confirmButtonText: 'Aceptar',
+                            confirmButtonColor: '#008dc9'
+                        })
+                    }
+                },
+                error: function (response) {
+                    Swal.fire({
+                        title: 'Ocurrio un error intente nuevamente',
+                        text: 'Revisa los campos del Tratamiento',
+                        icon: 'info',
+                        confirmButtonText: 'Aceptar',
+                        confirmButtonColor: '#008dc9'
+                    })
+                }
+
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    location.reload();
+                }
+            })
+        }
+
+        function changeDateStatus(citaState, CitaID) {
+            // Aquí puedes realizar la solicitud AJAX con el valor de citaState
+            ////console.log(`Estado de cita seleccionado: ${citaState}`);
+
+            $.ajax({
+                url: sessionStorage.urlEP + `/api/Appointments/v1/UpdateAppointmentStatus?uIDPetition=${uIDPetition}`,
+                type: 'GET',
+                data: { 'aID': CitaID, 'asID': citaState },
+                contentType: "application/json",
+                dataType: 'json',
+                success: function (response) {
+                    if (response.codeStatus == 0) {
+                        Swal.fire({
+                            title: response.messageStatus,
+                            icon: 'info',
+                            confirmButtonText: 'Aceptar',
+                            confirmButtonColor: '#008dc9'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                swal.close();
+                                location.reload();
+                            }
+                        })
+                    }
+                    else if (response.codeStatus == -1) {
+                        Swal.fire({
+                            title: 'Error',
+                            text: response.messageStatus,
+                            icon: 'error',
+                            confirmButtonText: 'Aceptar',
+                            confirmButtonColor: '#008dc9'
+                        })
+                    }
+
+                },
+                error: function (error) {
+                    //console.log('Error al obtener los detalles del usuario.');
+                }
+
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    location.reload();
+                }
+            })
+        }
+
+        function mostrarCargando() {
+            Swal.fire({
+                title: 'Cargando',
+                text: 'Por favor, espere un momento...',
+                showCancelButton: false,
+                showConfirmButton: false,
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                }
+            });
+        }
+        $(document).ready(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+
+        });
+
+        function toggleCheckboxes(checkbox) {
+            $("input[name='checkbox-close-question']").prop('checked', false);
+            $(checkbox).prop('checked', true);
+        }
+
+
+
+    </script>
+}

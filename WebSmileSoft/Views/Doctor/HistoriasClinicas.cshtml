@@ -1,0 +1,522 @@
+﻿
+<div class="container mt-5">
+    <h1 class="mb-4">Historias Clínicas</h1>
+    <div class="row">
+        <div class="col-md-12">
+            <!-- Panel de búsqueda de pacientes -->
+            @* <div id="findIcon" onmouseenter="showDiv()" style="display: none">
+            <i class="fa-solid fa-magnifying-glass text-primary fa-sm"> </i><span> Buscar Historia Clinica del Paciente</span>
+            </div> *@
+            <div class="card" id="myDiv" @* onmouseleave="hideDiv()" onmouseenter="showDiv()" *@>
+                <div class="card">
+                    <div class="card-body text-primary">
+                        <h5 class="card-title">Buscar Historia Clinica</h5>
+                        <form>
+                            <div class="row">
+                                <div class="col-3 mb-1 ">
+                                    <input type="text" class="form-control" placeholder="Documento del Paciente" id="userIdInput">
+                                    @* <label for="userIdInput">Documento del Paciente</label> *@
+                                </div>
+                                <div class="col-2">
+                                    <button type="button" class="btn btn-primary" id="buscarButton">Buscar</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-md-12 shadow mb-2" id="imprimir" style="display:none;">
+            <!-- Historias Clínicas -->
+            <div class="card">
+                <div class="card-body">
+                    <!-- Encabezado -->
+                    <div class="card-header mb-3">
+                        <div class="row mt-3">
+                            <div class="col-md-4 mt-2 text-center">
+                                <img src="~/assets/img/logo-nav.png" class="img-fluid" id="navLogo" title="logo">
+                            </div>
+                            <div class="col-md-4 mt-4 text-center justify-content-center align-content-center">
+                                <h5 class="card-title">Historia Clínica @* de <span id="patientFName">[Nombre del Paciente]</span> *@</h5>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="text-center">
+                                    <p>Fecha: <span id="currentDate">[Fecha de la Historia Clínica]</span></p>
+                                    <p>Versión: 1.0</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <!-- Contenido de la Historia Clínica -->
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <p><strong>Nombre:</strong> <span id="patientName"></span></p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <p><strong>Apellidos:</strong> <span id="patientLName"></span></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <p><strong>Edad:</strong> <span id="patientAge"></span></p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <p><strong>Fecha de Nacimiento:</strong> <span id="patientBirthDay"></span></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <p><strong>Cedula:</strong> <span id="patientuDocument"></span></p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <p><strong>Correo electronico:</strong> <span id="patientEmail"></span></p>
+                                </div>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="row">
+                            <!-- Datos Citas -->
+                            <div class="col-md-12">
+                                <div class="mb-3" style="display:none;">
+                                    <h6>Doctor</h6>
+                                    <p><strong>Nombre del Doctor:</strong> [Nombre del Doctor]</p>
+                                    <!-- Agregar campo de firma del doctor si es necesario -->
+                                </div>
+                                <div class="mb-3">
+                                    <h6>Historial tratamientos</h6>
+                                    <div id="questionsContainer">
+                                        <form id="questionsContainerForm"></form>
+                                        @* <img src="https://smilesoftblobs.blob.core.windows.net/smilesoftimages/cita128_20231114215010.jpg" class="img-fluid" id="blobQuestion" title="blobTreatment"> *@
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="row" id="pdfButton" style="display:none;">
+            <div class="col-6 col-md-3 col-sm-2">
+                <input type="button" class="button btn btn-primary btn-sm me-2" onclick="printDiv()" value="Imprimir" />
+                <a href="#" class="button btn btn-primary btn-sm " style="display:none;">
+                    <i class="fas fa-file-pdf fa-xl"></i> Generar PDF
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@section Scripts{
+    <script>
+        function generarPDF() {
+            // Get the container element
+            const container = document.getElementById('imprimir');
+            $("#button-pdf").attr('hidden', 'true')
+            $("#imprimir").removeClass('shadow');
+            // Use html2canvas to convert the container to a canvas
+            html2canvas(container).then(canvas => {
+                // Create a new jsPDF instance
+                const pdf = new jsPDF();
+                // Add the canvas to the PDF
+                pdf.addImage(canvas.toDataURL('image/png', 0.5), 'PNG', 0, 0, pdf.internal.pageSize.getWidth(), 0);
+                // Save the PDF
+                pdf.save('historia-clinica.pdf');
+                $("#button-pdf").removeAttr('hidden', 'true');
+                $("#imprimir").addClass('shadow');
+            });
+        };
+
+        function printDiv() {
+            window.print();
+        }
+
+    </script>
+
+    <script>
+        let userRole = sessionStorage.getItem('userRole');
+        if (userRole == '3') {
+            logoutUser();
+        }
+
+        let patientData = [];
+        //console.log('PatientData: ', patientData);
+        // Function to populate patient information
+        function populatePatientInfo() {
+            // Get the current date
+            const currentDate = new Date();
+            // For example, to get the current year:
+            const currentYear = currentDate.getFullYear();
+            // To get the current month (0-11, where 0 is January and 11 is December):
+            const currentMonth = currentDate.getMonth();
+            // To get the current day of the month (1-31):
+            const currentDay = currentDate.getDate();
+            const currentDateFormat = `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}-${String(currentDay).padStart(2, '0')}`;
+            let fechaCompleta = patientData.uBirthDate;
+            let fechaSolo = null;
+            if (fechaCompleta !== null && fechaCompleta !== undefined) {
+                fechaSolo = fechaCompleta.split('T')[0];
+            } else {
+                fechaSolo = patientData.uBirthDate;
+            }
+            sessionStorage.setItem('patientDataID', patientData.uID);
+            //console.log('Fecha de Nacimiento: ', fechaSolo);
+            document.getElementById("currentDate").textContent = currentDateFormat;
+            //document.getElementById("patientFName").textContent = patientData.uName + patientData.uLastName;
+            document.getElementById("patientName").textContent = patientData.uName;
+            document.getElementById("patientLName").textContent = patientData.uLastName;
+            document.getElementById("patientAge").textContent = calculateAge(patientData.uBirthDate); // You can create a function to calculate age
+            document.getElementById("patientBirthDay").textContent = fechaSolo; // You can create a function to format the date
+            document.getElementById("patientuDocument").textContent = patientData.uDocument; // You can create a function to calculate age
+            document.getElementById("patientEmail").textContent = patientData.uEmailAddress;
+        }
+
+        // Function to calculate age based on birthdate
+        function calculateAge(birthdate) {
+            // Parse the birthdate string into a Date object
+            let birthDate = new Date(birthdate);
+
+            // Get the current date
+            let currentDate = new Date();
+
+            // Calculate the difference in years
+            let age = currentDate.getFullYear() - birthDate.getFullYear();
+
+            // Check if the birthday for this year has already occurred
+            // If not, subtract one from the age
+            if (
+                currentDate.getMonth() < birthDate.getMonth() ||
+                (currentDate.getMonth() === birthDate.getMonth() &&
+                    currentDate.getDate() < birthDate.getDate())
+            ) {
+                age--;
+            }
+
+            return age;
+        }
+        let patientID = sessionStorage.getItem('patientDataID');
+        let appointmentDates = [];
+
+        function getAppoinmentData(patientID) {
+            //debugger;
+            ////console.log("Funcion getAppoinmentData");
+            $.ajax({
+                url: sessionStorage.urlEP + '/api/Appointments/v1/GetAppointmentsList',
+                type: 'GET',
+                data: { 'uDocument': patientID },
+                contentType: "application/json",
+                dataType: 'json',
+                success: function (data) {
+                    // Procesar los datos recibidos y agregar filas a la tabla
+                    let dataSet = [];
+
+                    $.each(data.itemJson, function (index, cita) {
+                        let fechaCita = cita.aDate;
+                        let fechaFormateada = fechaCita.substring(0, 10);
+                        if (cita.asName === "Realizado") {
+                            let rowData = [
+                                cita.aID,
+                                cita.uDoctorName,
+                                cita.aDescription,
+                                fechaFormateada,
+                                cita.asName
+                            ]; dataSet.push(rowData);
+
+                        }
+                        ////console.log("ROW Data : ", rowData);
+                        appointmentDates = dataSet;
+                    });
+                    //appointmentDates = dataSet;
+                }
+            });
+        }
+        let tratamientoID = 0;
+        let totalTratamientos = 0;
+        console.log("Apoinment Dates: ", appointmentDates);
+        //Call the function to populate patient information
+        async function loadUserClinicalHistory(inputUserId) {
+            try {
+                getAppoinmentData(inputUserId);
+                // Fetch user details
+                let userResponse = await fetch(`${sessionStorage.urlEP}/api/Users/v1/GetUserDetails?uDocument=${inputUserId}`);
+                let userData = await userResponse.json();
+                //debugger;
+                console.log('userData in async function: ', userData)
+                console.log("Userdata Json:", userData.itemJson);
+                let buttonPDF = document.getElementById("pdfButton");
+
+                if (userData.itemJson === null) {
+                    buttonPDF.style.display = "none";
+                    Swal.fire({
+                        title: 'Info',
+                        text: 'El usuario ingresado no existe, por favor ingrese un usuario válido.',
+                        icon: 'info',
+                        confirmButtonText: 'Aceptar',
+                    });
+
+                } else if (userData.itemJson.utID !== 3) {
+                    buttonPDF.style.display = "none";
+                    Swal.fire({
+                        title: 'Info',
+                        text: 'El usuario ingresado no es un paciente, por favor ingrese un usuario válido.',
+                        icon: 'info',
+                        confirmButtonText: 'Aceptar',
+                    });
+                } else {
+                    patientData = userData.itemJson;
+                    // Fetch clinical history
+                    const clinicalHistoryResponse = await fetch(`${sessionStorage.urlEP}/api/Generics/v1/GetUserClinicStory?uDocument=${inputUserId}`);
+                    console.log('clinicalHistoryResponse: ', clinicalHistoryResponse);
+                    const clinicalHistoryData = await clinicalHistoryResponse.json();
+                    console.log('clinicalHistoryData: ', clinicalHistoryData.itemJson.length);
+                    totalTratamientos = clinicalHistoryData.itemJson.length;
+                    if (totalTratamientos === 0) {
+                        buttonPDF.style.display = "none";
+                        Swal.fire({
+                            title: 'Info',
+                            text: 'El usuario ingresado no tiene historial clínica.',
+                            icon: 'info',
+                            confirmButtonText: 'Aceptar',
+                            confirmButtonColor: '#008dc9',
+
+                        });
+
+                    } else if (clinicalHistoryData.codeStatus == 0) {
+                        buttonPDF.style.display = "block";
+                        let allClinicalHistory = [];
+                        let form = $('#questionsContainerForm');
+                        form.empty();
+                        clinicalHistoryData.itemJson.forEach(item => {
+                            item = JSON.parse(item);
+                            allClinicalHistory = [...item];
+                            console.log('allClinicalHistory: ', allClinicalHistory);
+                            processClinicalHistoryData(allClinicalHistory);
+                            buttonPDF.style.display = "block";
+                            tratamientoID++;
+                        });
+                        // Process clinical history data and populate the form
+
+                    } else {
+                        Swal.fire({
+                            title: 'Info',
+                            text: clinicalHistoryData.messageStatus,
+                            icon: 'info',
+                            confirmButtonText: 'Aceptar',
+                            confirmButtonColor: '#008dc9',
+
+                        });
+                    }
+                }
+
+            } catch (error) {
+                mostrarMensajeError('Error al obtener detalles del usuario o historial clínico.');
+            }
+        }
+        // function loadUserClinicalHistory(inputUserId) {
+        //     $.ajax({
+        //         url: sessionStorage.urlEP + `/api/Generics/v1/GetUserClinicStory?uDocument=${inputUserId}`,
+        //         type: 'GET',
+        //         contentType: "application/json",
+        //         dataType: 'json',
+        //         async: false,
+        //         success: function (response) {
+        //             totalTratamientos = response.itemJson.length;
+        //             let buttonPDF = document.getElementById("pdfButton");
+        //             let form = $('#questionsContainerForm');
+        //             //debugger;
+        //             if (response.codeStatus == 0) {
+        //                 getAppoinmentData(inputUserId);
+        //                 form.empty();
+        //                 if (response.itemJson.length > 0) {
+        //                     $("#clinicalHistoryModal").modal("show");
+        //                     let citas = response.itemJson
+        //                     citas.map(item => {
+        //                         if (item) {
+        //                             item = JSON.parse(item)
+        //                             allClinicalHistory = [...item]
+        //                             //debugger;
+        //                             processClinicalHistoryData(allClinicalHistory);
+        //                             tratamientoID++;
+        //                         }
+        //                     })
+        //                     console.log(allClinicalHistory)
+        //                 } else {
+        //                     Swal.fire({
+        //                         title: 'info',
+        //                         text: 'No se encontraron registros',
+        //                         icon: 'error',
+        //                         confirmButtonText: 'Aceptar'
+        //                     })
+        //                 }
+        //             }
+        //             else if (response.codeStatus == -1) {
+        //                 Swal.fire({
+        //                     title: 'Error',
+        //                     text: response.messageStatus,
+        //                     icon: 'error',
+        //                     confirmButtonText: 'Aceptar'
+        //                 })
+        //             }
+        //         }
+        //     })
+        // }
+
+        function processClinicalHistoryData(allClinicalHistory) {
+            let questionTypes = {
+                'open': function (question) {
+                    let inputField = $(`<input disabled placeholder="${question.value}" type="text" id="${question.id}" class="form-control"></input><br>`);
+
+                    let container = $('<div class="form-group"></div>').append(
+                        `<label class="text-primary m-0 fw-bold" for="${question.id}">`
+                        + question.name +
+                        '</label><br>', inputField);
+
+                    return container
+                },
+                'close': function (question) {
+
+                    let checkBox1 = $(`<input disabled class="form-check-input" id="${question.id}" type="radio" >`).attr('name', "checkbox-close-question");
+                    // let checkBox1 = $(`<input disabled class="form-check-input" id="${question.id}" type="checkbox" onclick="toggleCheckboxes(this)">`).attr('name', "checkbox-close-question");
+
+                    let label1 = $(`<label class="form-check-label" for="${question.id}">`).text("SI");
+
+                    // let checkBox2 = $(`<input disabled class="form-check-input" id="${question.id}0" type="checkbox" onclick="toggleCheckboxes(this)">`).attr('name', "checkbox-close-question");
+                    let checkBox2 = $(`<input disabled class="form-check-input" id="${question.id}0" type="radio" >`).attr('name', "checkbox-close-question");
+
+                    let label2 = $(`<label class="form-check-label" for="${question.id}0">`).text("NO");
+
+                    let answer = question.value == 'SI' ? checkBox1 : checkBox2;
+                    answer.attr('checked', true)
+
+                    let container1 = $('<div class="form-check form-check-inline"></div>').append(checkBox1, label1);
+
+                    let container2 = $('<div class="form-check form-check-inline"></div>').append(checkBox2, label2);
+
+                    let container = $('<div class="mb-4 mt-2"></div>').append(`<p class="text-primary m-0 fw-bold">${question.name}</p>`, container1, container2);
+
+                    return container;
+                },
+                'multiple': function (question) {
+                    let options = $(`<select class="form-select" id="${question.id}" multiple></select>`);
+
+                    question.value.forEach(function (option) {
+                        options.append('<option disabled value="' + option + '">' + option + '</option>');
+                    });
+
+                    let container = $('<div class="mb-4"></div>').append(`<p class="text-primary m-0 fw-bold">${question.name}</p>`, options)
+
+                    return container
+                },
+                'fileUpload': function (question) {
+                    //insertar un div con un img para mostrar la imagen
+                    //<img src="https://smilesoftblobs.blob.core.windows.net/smilesoftimages/cita128_20231114215010.jpg" class="img-fluid" id="blobQuestion" title="blobTreatment">
+                    let img = $(`<img src="${question.value}" class="img-fluid blobQuestion" id="${question.id}" title="blobTreatment">`);
+                    let container = $('<div class="mb-4"></div>').append(`<p class="text-primary m-0 fw-bold">Imagen Adjunta al ${question.name}</p>`, img)
+
+                    return container
+                }
+            };
+            let form = $('#questionsContainerForm');
+            //form.empty();
+            finalStructure = [];
+
+            // Create three columns using Bootstrap's grid system
+            let column1 = $('<div class="col-md-4"></div>');
+            let column2 = $('<div class="col-md-4"></div>');
+            let column3 = $('<div class="col-md-4"></div>');
+
+            allClinicalHistory.forEach(function (question, index) {
+                question.id = index + 1;
+                
+
+                if (!question.type || !question.name) {
+                    console.error('Question is missing type or name:', question);
+                    return; // Skip questions with missing data
+                }
+
+                let questionContainer = $(`<div class="question-${question.id}"></div>`);
+
+                if (question.type === 'open') {
+                    let inputElement = questionTypes.open(question);
+                    finalStructure.push(question);
+                    questionContainer.append(inputElement);
+                } else if (question.type === 'close') {
+                    let inputElement = questionTypes.close(question);
+                    finalStructure.push(question);
+                    questionContainer.append(inputElement);
+                } else if (question.type === 'multiple') {
+                    let inputElement = questionTypes.multiple(question);
+                    finalStructure.push(question);
+                    questionContainer.append(inputElement);
+                } else if (question.type === 'fileUpload') {
+                    let inputElement = questionTypes.fileUpload(question);
+                    finalStructure.push(question);
+                    questionContainer.append(inputElement);
+                }
+                else {
+                    console.error('Tipo de pregunta no válido: ' + question.type);
+                }
+
+                // Add the question container to one of the three columns
+                if (index % 3 === 0) {
+                    column1.append(questionContainer);
+                } else if (index % 3 === 1) {
+                    column2.append(questionContainer);
+                } else {
+                    column3.append(questionContainer);
+                }
+
+            });
+
+            let clinicHistory = document.getElementById("imprimir");
+            clinicHistory.style.display = "block";
+
+            // Add the three columns to the form
+            let row = $('<div class="row"></div>').append(column1, column2, column3);
+            let container = $('<div class="container"></div>').append(row);
+            container.append('<hr>');
+            
+
+            // if (tratamientoID < totalTratamientos) {
+            //     let tratamientoID2 = tratamientoID + 1;
+            //     let MostrarFechaCita = appointmentDates[tratamientoID2][3];
+            //     let MostrarDoctorCita = appointmentDates[tratamientoID2][1];
+            //     let MostrarMotivoCita = appointmentDates[tratamientoID2][2];
+            //     container.append(`<h6>#${tratamientoID2} | Fecha de la Consulta: ${MostrarFechaCita} | Doctor: ${MostrarDoctorCita} | Motivo: ${MostrarMotivoCita} </h6>`);
+            //     form.append(container);
+            // }
+            // else {
+            //     form.append(container);
+            // }
+            form.append(container);
+            populatePatientInfo();
+        }
+
+        $("#buscarButton").on("click", function () {
+            let userId = $("#userIdInput").val().trim(); // Get the user ID from the input field
+            loadUserClinicalHistory(userId);
+        });
+
+
+    </script>
+    }

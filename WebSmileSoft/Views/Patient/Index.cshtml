@@ -1,0 +1,172 @@
+﻿@{
+    ViewData["Title"] = "Inicio";
+}
+<div class="container">
+    <div class="welcome-container shadow mb-4">
+        <h2 class="text-primary display-4 ">Bienvenido a SmileSoft</h2>
+        <span class="d-none d-lg-inline me-2 small text-primary fw-bold" id="SaludoUsuario"></span>
+    </div>
+
+
+
+    <!-- Sección de selección de servicios -->
+    <div class="card">
+        <div class="card-header">
+            <div class="card-header">
+                <div class="d-sm-flex justify-content-between align-items-center mb-4">
+                    <h3 class="mb-0 text-primary">Servicios</h3>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-xl-3 mb-4">
+                    <a class="nav-link" asp-controller="Patient" asp-action="GestiondeCitas" class="text-decoration-none">
+                        <div class="card shadow border-start-primary py-2 card-hover bg-primary">
+                            <div class="card-body">
+                                <div class="row align-items-center no-gutters">
+                                    <div class="col me-2">
+                                        <div class="text-uppercase text-white fw-bold mb-1"><span>Gestionar Citas</span></div>
+                                        <div class="fw-bold h5 mb-0"><span class="align-items-center"></span></div><!-- Cargar datos de la base de datos -->
+                                    </div>
+                                    <div class="col-auto"><i class="far fa-calendar-check fa-2x text-white"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-6 col-xl-3 mb-4" style="display:none;">
+                    <a class="nav-link" asp-controller="Patient" asp-action="HistoriaClinicaPacientes" class="text-decoration-none">
+                        <div class="card shadow border-start-success py-2 card-hover bg-primary">
+                            <div class="card-body">
+                                <div class="row align-items-center no-gutters">
+                                    <div class="col me-2">
+                                        <div class="text-uppercase text-white fw-bold text mb-1"><span>Historias Clinicas</span></div>
+                                        <div class="fw-bold h5 mb-0"><span></span></div><!-- Cargar datos de la base de datos -->
+                                    </div>
+                                    <div class="col-auto"><i class="fas fa-file-medical fa-2x text-white"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@section Scripts {
+    <script>
+
+        const driver = window.driver.js.driver;
+
+        const driverObj = driver({
+            showProgress: true,
+            showButtons: [
+                'next',
+                'previous',
+                'close'
+            ],
+            steps: [
+                {
+                    element: '.wrapper',
+                    popover: {
+                        title: 'Bienvenido a Smilesoft',
+                        description: 'Este es el área principal de Smilesoft. Te guiaremos a través de las diversas funcionalidades de nuestro sitio para asegurarnos de que aproveches al máximo tu experiencia.'
+                    }
+                },
+                {
+                    element: '#nav_bar',
+                    popover: {
+                        title: 'Barra Superior',
+                        description: 'La Barra Superior es tu punto central de navegación. Desde aquí, puedes acceder a tu perfil para Actualizar tus datos, contraseña o desactivar tu cuenta.'
+                    }
+                },
+                {
+                    element: '#MenuPerfil',
+                    popover: {
+                        title: 'Perfil',
+                        description: 'Accede a los ajustes de tu perfil desde este menú. Al hacer clic, se mostrarán las opciones de perfil, permitiéndote personalizar tu cuenta según tus preferencias.'
+                    },
+                    onNextClick: () => {
+                        //añadir la clase show al elemento id=ShowProfileMenu y cambiar el aria-expanded a true
+                        document.getElementById('ShowProfileMenu').classList.add('show');
+                        document.getElementById('ShowProfileMenu').setAttribute('aria-expanded', 'true');
+                        driverObj.moveNext();
+                    },
+                },
+                //{ element: '#ShowProfileMenu', popover: { title: 'Perfil', description: 'Desde aqui podremos acceder a los ajustes de nuestro perfil' } },
+                {
+                    element: '.sidebar',
+                    popover: {
+                        title: 'Menú de Opciones',
+                        description: 'El Menú de Opciones muestra los diferentes aplicativos de nuestro software. Explora las diversas funciones que ofrecemos para mejorar tu experiencia con Smilesoft.'
+                    }
+                },
+                //{ element: '#divAdmin', popover: { title: 'Opciones Administrador', description: 'Estas son las rutas que podra usar el administrador del aplicativo' } },
+                {
+                    element: '#gestionCitas',
+                    popover: {
+                        title: 'Citas registradas',
+                        description: 'Accede a un resumen de todas las citas que tienes registradas en nuestro Aplicativo. Este panel te permite gestionar, programar y dar seguimiento a las citas de manera eficiente.'
+                    }
+                },
+
+                {
+                    element: '.logoutUsers',
+                    popover: {
+                        title: 'Cerrar Sesión',
+                        description: 'Cierra tu sesión fácilmente desde este enlace cuando hayas terminado de utilizar Smilesoft. Garantizamos la seguridad de tu cuenta con este sencillo paso.'
+                    }
+                },
+
+                {
+                    element: '.wrapper', popover: { title: 'Gracias por Usar Smilesoft', description: '' }, onDeselected: () => {
+                        localStorage.setItem('tutorial', true);
+                    }
+                },
+
+            ],
+
+
+        });
+        //debugger;
+        //driverObj.drive();
+        console.log("Tutorial", localStorage.getItem('tutorial'));
+        // Cuando el usuario inicia sesión por primera vez
+        let tutorialState = localStorage.getItem('tutorial');
+        if (tutorialState === "false") {
+            // Mostrar el tutorial
+            localStorage.setItem('tutorial', true);
+            driverObj.drive();
+
+            // Establecer la variable para indicar que el usuario ha visto el tutorial
+
+        }
+
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            //verifyToken();
+            ////console.log("Validar si tiene Datos de Direccion");
+            let valDireccion = sessionStorage.getItem("userAddress");
+            //console.log(valDireccion);
+            if (valDireccion == null || valDireccion == "null" || valDireccion == "") {
+                //console.log("Mostrar Swal");
+
+                // Si valDireccion es nulo, muestra una alerta al usuario
+                Swal.fire({
+                    title: '¡Bienvenido!',
+                    text: 'Por favor, Actualice todos sus Datos',
+                    icon: 'info',
+                    confirmButtonText: 'Aceptar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Redirige al usuario a la página de actualización de dirección
+                        window.location.href = '@Url.Action("Index", "Profile")';
+                    }
+                });
+            }
+        });
+    </script>
+}

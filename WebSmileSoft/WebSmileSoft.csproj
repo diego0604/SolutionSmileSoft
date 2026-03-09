@@ -1,0 +1,59 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="wwwroot\assets\js\Appoinments\**" />
+    <Compile Remove="wwwroot\assets\js\doctor\**" />
+    <Compile Remove="wwwroot\assets\plugins\**" />
+    <Compile Remove="wwwroot\assets\video\**" />
+    <Content Remove="wwwroot\assets\js\Appoinments\**" />
+    <Content Remove="wwwroot\assets\js\doctor\**" />
+    <Content Remove="wwwroot\assets\plugins\**" />
+    <Content Remove="wwwroot\assets\video\**" />
+    <EmbeddedResource Remove="wwwroot\assets\js\Appoinments\**" />
+    <EmbeddedResource Remove="wwwroot\assets\js\doctor\**" />
+    <EmbeddedResource Remove="wwwroot\assets\plugins\**" />
+    <EmbeddedResource Remove="wwwroot\assets\video\**" />
+    <None Remove="wwwroot\assets\js\Appoinments\**" />
+    <None Remove="wwwroot\assets\js\doctor\**" />
+    <None Remove="wwwroot\assets\plugins\**" />
+    <None Remove="wwwroot\assets\video\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Views\Home\About.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Views\Home\About.cshtml" />
+    <None Include="Views\Home\Index.cshtml" />
+    <None Include="Views\Home\Privacy.cshtml" />
+    <None Include="wwwroot\assets\js\bootstrap.min.js" />
+    <None Include="wwwroot\assets\js\bs-init.js" />
+    <None Include="wwwroot\assets\js\changetheme.js" />
+    <None Include="wwwroot\assets\js\jquery.min.js" />
+    <None Include="wwwroot\assets\js\popper.js" />
+    <None Include="wwwroot\assets\js\theme.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.22" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.21" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.16" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\Home\About.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Views\Home\About.cshtml" />
+  </ItemGroup>
+
+</Project>
