@@ -1,3 +1,8 @@
+
+Click public AskDeepWiki 
+
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)]([https://deepwiki.com/diego0604/DistributedSystem](https://deepwiki.com/diego0604/SolutionSmileSoft))
+
 <p align="center">
   <img src="https://img.icons8.com/color/96/tooth.png" alt="SmileSoft Logo" width="96" height="96"/>
 </p>
